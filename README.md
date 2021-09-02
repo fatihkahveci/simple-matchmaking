@@ -1,3 +1,9 @@
+<h1 align="center">
+  <img src="https://github.com/fatihkahveci/simple-matchmaking/blob/main/mascot.png?raw=true" width="256px"/><br/>
+  Simple Matchmaking
+</h1>
+
+
 <p align="center">
     Simple rule based matchmaking for your online game with support of Redcon(RESP) protocol.
 </p>
