@@ -8,6 +8,8 @@
     Simple rule based matchmaking for your online game with support of Redcon(RESP) protocol.
 </p>
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/fatihkahveci/simple-matchmaking)](https://goreportcard.com/report/github.com/fatihkahveci/simple-matchmaking)
+[![GitHub license](https://img.shields.io/github/license/fatihkahveci/simple-matchmaking)](https://github.com/fatihkahveci/simple-matchmaking/blob/main/LICENSE)
 
 ## 1- Simple Match Rule
 
