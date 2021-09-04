@@ -40,3 +40,28 @@ func TestInMemory(t *testing.T) {
 	assert.Equal(t, "InMemory", inMemoryStore.GetName())
 
 }
+
+func BenchmarkAdd(b *testing.B) {
+	inMemoryStore := store.NewInMemoryStore()
+	user := store.User{
+		ID:    "1",
+		Score: 35,
+	}
+
+	for n := 0; n < b.N; n++ {
+		inMemoryStore.Add(user)
+	}
+}
+
+func BenchmarkGet(b *testing.B) {
+	inMemoryStore := store.NewInMemoryStore()
+	user := store.User{
+		ID:    "1",
+		Score: 35,
+	}
+	inMemoryStore.Add(user)
+
+	for n := 0; n < b.N; n++ {
+		inMemoryStore.Get("1")
+	}
+}
