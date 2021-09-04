@@ -9,6 +9,7 @@
 </p>
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/fatihkahveci/simple-matchmaking)](https://goreportcard.com/report/github.com/fatihkahveci/simple-matchmaking)
+[![Go Cover Card](https://gocover.io/_badge/github.com/fatihkahveci/simple-matchmaking)](https://gocover.io/_badge/github.com/fatihkahveci/simple-matchmaking)
 [![GitHub license](https://img.shields.io/github/license/fatihkahveci/simple-matchmaking)](https://github.com/fatihkahveci/simple-matchmaking/blob/main/LICENSE)
 
 ## 1- Simple Match Rule
