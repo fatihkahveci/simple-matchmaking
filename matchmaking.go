@@ -1,4 +1,4 @@
-package simpe_mm
+package matchmaker
 
 import (
 	"encoding/json"
@@ -27,7 +27,7 @@ type Options struct {
 	Timeout time.Duration
 }
 
-func NewMatchmaking(opts *Options) *Matchmaking {
+func New(opts *Options) *Matchmaking {
 	return &Matchmaking{
 		Name:    opts.Name,
 		Store:   opts.Store,

@@ -25,7 +25,7 @@ func main() {
 		Timeout: dur,
 	}
 
-	matcher := simpe_mm.NewMatchmaking(opts)
+	matcher := simpe_mm.New(opts)
 
 	matcher.Start()
 }

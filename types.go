@@ -1,4 +1,4 @@
-package simpe_mm
+package matchmaker
 
 import (
 	"encoding/json"
