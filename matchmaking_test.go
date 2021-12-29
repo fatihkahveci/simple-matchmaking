@@ -29,7 +29,7 @@ func TestDirectMatchRule(t *testing.T) {
 		Timeout: duration,
 	}
 
-	mm := simpe_mm.NewMatchmaking(opts)
+	mm := simpe_mm.New(opts)
 
 	u1 := store.User{
 		ID:    "1",
@@ -83,7 +83,7 @@ func TestScoreMatchRule(t *testing.T) {
 		Timeout: duration,
 	}
 
-	mm := simpe_mm.NewMatchmaking(opts)
+	mm := simpe_mm.New(opts)
 
 	u1 := store.User{
 		ID:    "1",
@@ -134,7 +134,7 @@ func TestIsExtendTime(t *testing.T) {
 		Timeout: duration,
 	}
 
-	mm := simpe_mm.NewMatchmaking(opts)
+	mm := simpe_mm.New(opts)
 
 	u1 := store.User{
 		ID:    "1",
