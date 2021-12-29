@@ -1,4 +1,4 @@
-package simpe_mm_test
+package matchmaker_test
 
 import (
 	"testing"
