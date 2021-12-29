@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/fatihkahveci/simple-matchmaking"
+	"time"
+
+	simpe_mm "github.com/fatihkahveci/simple-matchmaking"
 	"github.com/fatihkahveci/simple-matchmaking/rules"
 	"github.com/fatihkahveci/simple-matchmaking/server"
 	"github.com/fatihkahveci/simple-matchmaking/store"
-	"time"
 )
 
 func main() {
@@ -16,7 +17,15 @@ func main() {
 
 	respServer := server.NewRespServer(inMemory, ":1234")
 
-	matcher := simpe_mm.NewMatchmaking("simple", respServer, inMemory, r, dur)
+	opts := &simpe_mm.Options{
+		Name:    "simple",
+		Store:   inMemory,
+		Server:  respServer,
+		Rule:    r,
+		Timeout: dur,
+	}
+
+	matcher := simpe_mm.NewMatchmaking(opts)
 
 	matcher.Start()
 }
