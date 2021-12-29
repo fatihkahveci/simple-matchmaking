@@ -2,29 +2,38 @@ package simpe_mm
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/fatihkahveci/simple-matchmaking/rules"
 	"github.com/fatihkahveci/simple-matchmaking/server"
 	"github.com/fatihkahveci/simple-matchmaking/store"
 	"github.com/rs/zerolog/log"
-	"time"
 )
 
 type Matchmaking struct {
-	Name                 string
-	Store                store.Store
-	Server               server.Server
-	MatchTimeOutDuration time.Duration
-	ActiveMatchRule      rules.MatchRule
-	SearchTimeOut        int
+	Name          string
+	Store         store.Store
+	Server        server.Server
+	Timeout       time.Duration
+	Rule          rules.MatchRule
+	SearchTimeOut int
 }
 
-func NewMatchmaking(name string, server server.Server, store store.Store, matchRule rules.MatchRule, matchTimeOutDuration time.Duration) *Matchmaking {
+type Options struct {
+	Name    string
+	Store   store.Store
+	Server  server.Server
+	Rule    rules.MatchRule
+	Timeout time.Duration
+}
+
+func NewMatchmaking(opts *Options) *Matchmaking {
 	return &Matchmaking{
-		Name:                 name,
-		Store:                store,
-		MatchTimeOutDuration: matchTimeOutDuration,
-		ActiveMatchRule:      matchRule,
-		Server:               server,
+		Name:    opts.Name,
+		Store:   opts.Store,
+		Timeout: opts.Timeout,
+		Rule:    opts.Rule,
+		Server:  opts.Server,
 	}
 }
 
@@ -32,7 +41,7 @@ func (m *Matchmaking) Start() {
 
 	log.Info().
 		Str("store", m.Store.GetName()).
-		Str("rule", m.ActiveMatchRule.GetName()).
+		Str("rule", m.Rule.GetName()).
 		Msg("matchmaking_start")
 
 	for true {
@@ -57,7 +66,7 @@ func (m *Matchmaking) RunLoop() {
 			if m.isUserExtendTime(user) {
 				m.RemoveUser(user)
 				allUsers = m.Store.GetAll()
-				timeOutResponse, err := NewMatchTimeOutResponse(m.ActiveMatchRule.GetName(), user)
+				timeOutResponse, err := NewMatchTimeOutResponse(m.Rule.GetName(), user)
 
 				if err != nil {
 					errorResponse, _ := NewErrorResponse(err)
@@ -84,14 +93,14 @@ func (m *Matchmaking) CanMatch(user1, user2 store.User) bool {
 	if user1.ID == user2.ID {
 		return false
 	}
-	return m.ActiveMatchRule.Match(user1, user2)
+	return m.Rule.Match(user1, user2)
 }
 
 func (m *Matchmaking) SendMatch(user1, user2 store.User) {
 	m.RemoveUser(user1)
 	m.RemoveUser(user2)
 
-	matchResponse := NewMatchFinishResponse(m.ActiveMatchRule.GetName(), user1, user2)
+	matchResponse := NewMatchFinishResponse(m.Rule.GetName(), user1, user2)
 
 	jsonData, err := json.Marshal(matchResponse)
 
@@ -110,7 +119,7 @@ func (m *Matchmaking) SendMatch(user1, user2 store.User) {
 
 func (m *Matchmaking) isUserExtendTime(user store.User) bool {
 	now := time.Now()
-	extendTime := user.JoinTime.Add(m.MatchTimeOutDuration)
+	extendTime := user.JoinTime.Add(m.Timeout)
 	if now.Unix() > extendTime.Unix() {
 		return true
 	}

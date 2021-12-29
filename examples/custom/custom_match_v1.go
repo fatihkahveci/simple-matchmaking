@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/fatihkahveci/simple-matchmaking"
+	"time"
+
+	simpe_mm "github.com/fatihkahveci/simple-matchmaking"
 	"github.com/fatihkahveci/simple-matchmaking/server"
 	"github.com/fatihkahveci/simple-matchmaking/store"
-	"time"
 )
 
 type CustomFieldMatchRule struct {
@@ -47,7 +48,15 @@ func main() {
 
 	respServer := server.NewRespServer(inMemory, ":1234")
 
-	matcher := simpe_mm.NewMatchmaking("custom", respServer, inMemory, r, dur)
+	opts := &simpe_mm.Options{
+		Name:    "custom",
+		Store:   inMemory,
+		Server:  respServer,
+		Rule:    r,
+		Timeout: dur,
+	}
+
+	matcher := simpe_mm.NewMatchmaking(opts)
 
 	matcher.Start()
 }

@@ -1,13 +1,14 @@
 package simpe_mm_test
 
 import (
-	"github.com/fatihkahveci/simple-matchmaking"
+	"testing"
+	"time"
+
+	simpe_mm "github.com/fatihkahveci/simple-matchmaking"
 	"github.com/fatihkahveci/simple-matchmaking/rules"
 	"github.com/fatihkahveci/simple-matchmaking/server"
 	"github.com/fatihkahveci/simple-matchmaking/store"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestDirectMatchRule(t *testing.T) {
@@ -20,7 +21,15 @@ func TestDirectMatchRule(t *testing.T) {
 		t.Error(err)
 	}
 
-	mm := simpe_mm.NewMatchmaking("test", respServer, inMemory, rule, duration)
+	opts := &simpe_mm.Options{
+		Name:    "test",
+		Store:   inMemory,
+		Server:  respServer,
+		Rule:    rule,
+		Timeout: duration,
+	}
+
+	mm := simpe_mm.NewMatchmaking(opts)
 
 	u1 := store.User{
 		ID:    "1",
@@ -66,7 +75,15 @@ func TestScoreMatchRule(t *testing.T) {
 		t.Error(err)
 	}
 
-	mm := simpe_mm.NewMatchmaking("test", respServer, inMemory, rule, duration)
+	opts := &simpe_mm.Options{
+		Name:    "test",
+		Store:   inMemory,
+		Server:  respServer,
+		Rule:    rule,
+		Timeout: duration,
+	}
+
+	mm := simpe_mm.NewMatchmaking(opts)
 
 	u1 := store.User{
 		ID:    "1",
@@ -109,7 +126,15 @@ func TestIsExtendTime(t *testing.T) {
 		t.Error(err)
 	}
 
-	mm := simpe_mm.NewMatchmaking("test", respServer, inMemory, rule, duration)
+	opts := &simpe_mm.Options{
+		Name:    "test",
+		Store:   inMemory,
+		Server:  respServer,
+		Rule:    rule,
+		Timeout: duration,
+	}
+
+	mm := simpe_mm.NewMatchmaking(opts)
 
 	u1 := store.User{
 		ID:    "1",
