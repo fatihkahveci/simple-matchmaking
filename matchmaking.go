@@ -46,7 +46,7 @@ func (m *Matchmaking) Start() {
 
 	for true {
 		m.RunLoop()
-		time.Sleep(time.Millisecond * 10)
+		time.Sleep(time.Millisecond * 500)
 	}
 
 }
@@ -60,8 +60,11 @@ func (m *Matchmaking) RemoveUser(user store.User) {
 }
 
 func (m *Matchmaking) RunLoop() {
+	if m.Store.Len() < 1 {
+		return
+	}
+
 	allUsers := m.Store.GetAll()
-	if len(allUsers) > 0 {
 		for _, user := range allUsers {
 			if m.isUserExtendTime(user) {
 				m.RemoveUser(user)
@@ -86,7 +89,6 @@ func (m *Matchmaking) RunLoop() {
 				}
 			}
 		}
-	}
 }
 
 func (m *Matchmaking) CanMatch(user1, user2 store.User) bool {
