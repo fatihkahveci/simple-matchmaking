@@ -42,6 +42,12 @@ func (i *InMemory) GetAll() map[string]User {
 	return i.Users
 }
 
+func (i *InMemory) Len() int {
+	i.Lock()
+	defer i.Unlock()
+	return len(i.Users)
+}
+
 func (i *InMemory) GetName() string {
 	return "InMemory"
 }

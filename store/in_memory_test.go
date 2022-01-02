@@ -31,6 +31,9 @@ func TestInMemory(t *testing.T) {
 
 	assert.Equal(t, store.User{}, getUser2)
 
+	//Test Len
+	assert.Equal(t, 1, inMemoryStore.Len())
+
 	//Test GetAll
 	allUsers := inMemoryStore.GetAll()
 	expectedUsers := make(map[string]store.User)
@@ -63,5 +66,18 @@ func BenchmarkGet(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		inMemoryStore.Get("1")
+	}
+}
+
+func BenchmarkLen(b *testing.B) {
+	inMemoryStore := store.NewInMemoryStore()
+	user := store.User{
+		ID:    "1",
+		Score: 35,
+	}
+	inMemoryStore.Add(user)
+
+	for n := 0; n < b.N; n++ {
+		inMemoryStore.Len()
 	}
 }

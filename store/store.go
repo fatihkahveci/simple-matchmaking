@@ -6,4 +6,5 @@ type Store interface {
 	Remove(user User)
 	Get(id string) User
 	GetAll() map[string]User
+	Len() int
 }
